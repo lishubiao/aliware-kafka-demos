@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.aftersale.mapper.AfterSaleMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="BaseResultMap" type="com.example.aftersale.entity.AfterSale">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT"/>
+        <result column="reference_no" property="referenceNo" jdbcType="VARCHAR"/>
+        <result column="track_no" property="trackNo" jdbcType="VARCHAR"/>
+        <result column="platform" property="platform" jdbcType="VARCHAR"/>
+        <result column="platform_account" property="platformAccount" jdbcType="VARCHAR"/>
+        <result column="site" property="site" jdbcType="VARCHAR"/>
+        <result column="buyer_name" property="buyerName" jdbcType="VARCHAR"/>
+        <result column="buyer_email" property="buyerEmail" jdbcType="VARCHAR"/>
+        <result column="source" property="source" jdbcType="TINYINT"/>
+        <result column="ty" property="ty" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="LONGVARCHAR"/>
+        <result column="info" property="info" jdbcType="LONGVARCHAR"/>
+        <result column="note" property="note" jdbcType="VARCHAR"/>
+        <result column="created_uid" property="createdUid" jdbcType="INTEGER"/>
+        <result column="created_user_id" property="createdUserId" jdbcType="INTEGER"/>
+        <result column="created_user_name" property="createdUserName" jdbcType="VARCHAR"/>
+        <result column="todo_uid" property="todoUid" jdbcType="INTEGER"/>
+        <result column="todo_user_id" property="todoUserId" jdbcType="INTEGER"/>
+        <result column="todo_user_name" property="todoUserName" jdbcType="VARCHAR"/>
+        <result column="process_time" property="processTime" jdbcType="TIMESTAMP"/>
+        <result column="after_sale_time" property="afterSaleTime" jdbcType="TIMESTAMP"/>
+        <result column="is_finish" property="isFinish" jdbcType="TINYINT"/>
+        <result column="flow_status" property="flowStatus" jdbcType="TINYINT"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="ty_name" property="tyName" jdbcType="VARCHAR"/>
+        <result column="flow_status_stage" property="flowStatusStage" jdbcType="VARCHAR"/>
+        <result column="country_code" property="countryCode" jdbcType="VARCHAR"/>
+        <result column="detection" property="detection" jdbcType="LONGVARCHAR"/>
+        <result column="product_sku_list" property="productSkuList" jdbcType="VARCHAR"/>
+        <result column="ty_full_name" property="tyFullName" jdbcType="VARCHAR"/>
+        <result column="currency" property="currency" jdbcType="VARCHAR"/>
+        <result column="platform_create_date" property="platformCreateDate" jdbcType="TIMESTAMP"/>
+        <result column="sign" property="sign" jdbcType="VARCHAR"/>
+        <result column="is_edit" property="isEdit" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <!-- 基础查询列 -->
+    <sql id="Base_Column_List">
+        id, created_time, updated_time, is_delete, reference_no, track_no, platform,
+        platform_account, site, buyer_name, buyer_email, source, ty, `description`, info,
+        note, created_uid, created_user_id, created_user_name, todo_uid, todo_user_id,
+        todo_user_name, process_time, after_sale_time, is_finish, flow_status, phone,
+        ty_name, flow_status_stage, country_code, detection, product_sku_list, ty_full_name,
+        currency, platform_create_date, sign, is_edit
+    </sql>
+
+    <!-- 新增售后记录 -->
+    <insert id="insert" parameterType="com.example.aftersale.entity.AfterSale" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO after_sale (
+            reference_no, track_no, platform, platform_account, site,
+            buyer_name, buyer_email, source, ty, `description`, info, note,
+            created_uid, created_user_id, created_user_name,
+            todo_uid, todo_user_id, todo_user_name,
+            is_finish, flow_status, phone, ty_name, flow_status_stage,
+            country_code, detection, product_sku_list, ty_full_name,
+            currency, platform_create_date, sign, is_delete, is_edit
+        ) VALUES (
+            #{referenceNo}, #{trackNo}, #{platform}, #{platformAccount}, #{site},
+            #{buyerName}, #{buyerEmail}, #{source}, #{ty}, #{description}, #{info}, #{note},
+            #{createdUid}, #{createdUserId}, #{createdUserName},
+            #{todoUid}, #{todoUserId}, #{todoUserName},
+            #{isFinish}, #{flowStatus}, #{phone}, #{tyName}, #{flowStatusStage},
+            #{countryCode}, #{detection}, #{productSkuList}, #{tyFullName},
+            #{currency}, #{platformCreateDate}, #{sign}, #{isDelete}, #{isEdit}
+        )
+    </insert>
+
+    <!-- 根据ID选择性更新非空字段 -->
+    <update id="updateById" parameterType="com.example.aftersale.entity.AfterSale">
+        UPDATE after_sale
+        <set>
+            <if test="trackNo != null">track_no = #{trackNo},</if>
+            <if test="platform != null and platform != ''">platform = #{platform},</if>
+            <if test="platformAccount != null and platformAccount != ''">platform_account = #{platformAccount},</if>
+            <if test="site != null">site = #{site},</if>
+            <if test="buyerName != null">buyer_name = #{buyerName},</if>
+            <if test="buyerEmail != null">buyer_email = #{buyerEmail},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="ty != null">ty = #{ty},</if>
+            <if test="tyName != null">ty_name = #{tyName},</if>
+            <if test="tyFullName != null">ty_full_name = #{tyFullName},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="info != null and info != ''">info = #{info},</if>
+            <if test="note != null">note = #{note},</if>
+            <if test="todoUid != null">todo_uid = #{todoUid},</if>
+            <if test="todoUserId != null">todo_user_id = #{todoUserId},</if>
+            <if test="todoUserName != null">todo_user_name = #{todoUserName},</if>
+            <if test="processTime != null">process_time = #{processTime},</if>
+            <if test="afterSaleTime != null">after_sale_time = #{afterSaleTime},</if>
+            <if test="isFinish != null">is_finish = #{isFinish},</if>
+            <if test="flowStatus != null">flow_status = #{flowStatus},</if>
+            <if test="flowStatusStage != null">flow_status_stage = #{flowStatusStage},</if>
+            <if test="countryCode != null">country_code = #{countryCode},</if>
+            <if test="detection != null">detection = #{detection},</if>
+            <if test="productSkuList != null">product_sku_list = #{productSkuList},</if>
+            <if test="currency != null">currency = #{currency},</if>
+            <if test="platformCreateDate != null">platform_create_date = #{platformCreateDate},</if>
+            <if test="sign != null">sign = #{sign},</if>
+            <if test="isEdit != null">is_edit = #{isEdit}</if>
+        </set>
+        WHERE id = #{id} AND is_delete = 0
+    </update>
+
+    <!-- 逻辑删除 -->
+    <update id="deleteById">
+        UPDATE after_sale SET is_delete = 1 WHERE id = #{id} AND is_delete = 0
+    </update>
+
+    <!-- 根据ID查询（排除已删除） -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM after_sale
+        WHERE id = #{id} AND is_delete = 0
+    </select>
+
+    <!-- 根据参考号查询列表（排除已删除） -->
+    <select id="selectByReferenceNo" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM after_sale
+        WHERE reference_no = #{referenceNo} AND is_delete = 0
+        ORDER BY id DESC
+    </select>
+
+    <!-- 多条件分页查询（排除已删除） -->
+    <select id="selectList" parameterType="com.example.aftersale.dto.AfterSaleQueryRequest" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM after_sale
+        <where>
+            is_delete = 0
+            <if test="referenceNo != null and referenceNo != ''">
+                AND reference_no LIKE CONCAT('%', #{referenceNo}, '%')
+            </if>
+            <if test="trackNo != null and trackNo != ''">
+                AND track_no LIKE CONCAT('%', #{trackNo}, '%')
+            </if>
+            <if test="platform != null and platform != ''">
+                AND platform = #{platform}
+            </if>
+            <if test="platformAccount != null and platformAccount != ''">
+                AND platform_account = #{platformAccount}
+            </if>
+            <if test="site != null and site != ''">
+                AND site = #{site}
+            </if>
+            <if test="buyerName != null and buyerName != ''">
+                AND buyer_name LIKE CONCAT('%', #{buyerName}, '%')
+            </if>
+            <if test="buyerEmail != null and buyerEmail != ''">
+                AND buyer_email LIKE CONCAT('%', #{buyerEmail}, '%')
+            </if>
+            <if test="phone != null and phone != ''">
+                AND phone = #{phone}
+            </if>
+            <if test="source != null">
+                AND source = #{source}
+            </if>
+            <if test="ty != null">
+                AND ty = #{ty}
+            </if>
+            <if test="createdUserId != null">
+                AND created_user_id = #{createdUserId}
+            </if>
+            <if test="todoUserId != null">
+                AND todo_user_id = #{todoUserId}
+            </if>
+            <if test="isFinish != null">
+                AND is_finish = #{isFinish}
+            </if>
+            <if test="flowStatus != null">
+                AND flow_status = #{flowStatus}
+            </if>
+            <if test="flowStatusStage != null and flowStatusStage != ''">
+                AND flow_status_stage = #{flowStatusStage}
+            </if>
+            <if test="countryCode != null and countryCode != ''">
+                AND country_code = #{countryCode}
+            </if>
+            <if test="sign != null and sign != ''">
+                AND sign = #{sign}
+            </if>
+            <if test="isEdit != null">
+                AND is_edit = #{isEdit}
+            </if>
+            <if test="createdTimeStart != null">
+                AND created_time >= #{createdTimeStart}
+            </if>
+            <if test="createdTimeEnd != null">
+                AND created_time &lt;= #{createdTimeEnd}
+            </if>
+            <if test="platformCreateDateStart != null">
+                AND platform_create_date >= #{platformCreateDateStart}
+            </if>
+            <if test="platformCreateDateEnd != null">
+                AND platform_create_date &lt;= #{platformCreateDateEnd}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+</mapper>
